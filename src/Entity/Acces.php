@@ -40,14 +40,14 @@ class Acces
         return $this->id;
     }
 
-    public function getUtilisateur(): ?User
+    public function getUtilisateurId(): ?User
     {
-        return $this->utilisateur;
+        return $this->utilisateur_id;
     }
 
-    public function setUtilisateur(?User $utilisateur): self
+    public function setUtilisateurId(?User $utilisateur_id): self
     {
-        $this->utilisateur = $utilisateur;
+        $this->utilisateur_id = $utilisateur_id;
 
         return $this;
     }

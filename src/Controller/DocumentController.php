@@ -19,11 +19,16 @@ class DocumentController extends AbstractController
     /**
      * @Route("/", name="document_index", methods={"GET"})
      */
-    public function index(DocumentRepository $documentRepository): Response
+    public function index(DocumentRepository $documentRepository, Request $request): Response
     {
+        $session = $request->getSession();
+        if($session->get('roleUser')<1 ||$session->get('roleUser') >3){
+        return $this->redirectToRoute('login');
+        }else{
         return $this->render('document/index.html.twig', [
             'documents' => $documentRepository->findAll(),
         ]);
+    }
     }
 
     /**

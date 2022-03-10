@@ -19,11 +19,16 @@ class AutorisationController extends AbstractController
     /**
      * @Route("/", name="autorisation_index", methods={"GET"})
      */
-    public function index(AutorisationRepository $autorisationRepository): Response
+    public function index(AutorisationRepository $autorisationRepository, Request $request): Response
     {
+        $session = $request->getSession();
+        if($session->get('roleUser')<1 ||$session->get('roleUser') >3){
+        return $this->redirectToRoute('login');
+        }else{
         return $this->render('autorisation/index.html.twig', [
             'autorisations' => $autorisationRepository->findAll(),
         ]);
+        }
     }
 
     /**

@@ -19,11 +19,16 @@ class UserController extends AbstractController
     /**
      * @Route("/", name="user_index", methods={"GET"})
      */
-    public function index(UserRepository $userRepository): Response
+    public function index(UserRepository $userRepository, Request $request): Response
     {
+        $session = $request->getSession();
+        if($session->get('roleUser')<1 ||$session->get('roleUser') >3){
+        return $this->redirectToRoute('login');
+        }else{
         return $this->render('user/index.html.twig', [
             'users' => $userRepository->findAll(),
         ]);
+        }
     }
 
     /**

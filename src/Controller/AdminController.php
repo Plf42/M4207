@@ -40,7 +40,7 @@ class AdminController extends AbstractController
         ]);
     }
 	/**
-	* @Route("/logout", "name="logout")
+	* @Route("/logout", name="logout")
 	*/
     public function logout(Request $request): Response
     {
@@ -135,9 +135,9 @@ class AdminController extends AbstractController
 			$em->flush();
 			//maj de la table acces
 			$acces = new Acces();
-			$acces->setDocument($doc);
+			$acces->setdocumentId($doc);
 			$acces->setAutorisation($doctrine->getRepository(Autorisation::class)->findOneById(2));
-			$acces->setUtilisateur($doctrine->getRepository(User::class)->findOneById($session->get('idUser')));
+			$acces->setUtilisateurId($doctrine->getRepository(User::class)->findOneById($session->get('idUser')));
 			$em->persist($acces);
 			$em->flush();
 			//5) sinon on renvoie la page demandée.
@@ -161,7 +161,7 @@ class AdminController extends AbstractController
 			return $this->redirectToRoute('login');
 		}else{	
 			// on récupère tous les accès de l'user connecté
-			$listeDocuments = $em->getRepository(Acces::class)->findByUtilisateur($em->getRepository(User::class)->findOneById($session->get('idUser')));
+			$listeDocuments = $em->getRepository(Acces::class)->findByUtilisateurId($em->getRepository(User::class)->findOneById($session->get('idUser')));
 			//5) sinon on renvoie la page demandée.
 			dump($listeDocuments);
 			return $this->render('admin/dashboard.html.twig', [
